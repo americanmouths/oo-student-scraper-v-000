@@ -28,7 +28,7 @@ class Scraper
         scraped_profiles[:linkedin] = profile.attribute("href").value
       elsif profile.attribute("href").value.include?("github")
         scraped_profiles[:github] = profile.attribute("href").value
-      else 
+      else
         scraped_profiles[:blog] = profile.attribute("href").value
       end
 
