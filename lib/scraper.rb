@@ -21,26 +21,26 @@ class Scraper
   def self.scrape_profile_page(profile_url)
     doc = Nokogiri::HTML(open(profile_url))
     scraped_profiles = {}
-    scraped_profiles[:twitter] = profile.css(".vitals-container .social-icon-container a").attribute("href").value unless 
+    scraped_profiles[:twitter] = profile.css(".vitals-container .social-icon-container a").attribute("href").value unless
     profile.css(".vitals-container .social-icon-container a").attribute("href").value == []
 
-    scraped_profiles[:linkedin] = profile.css(".vitals-container .social-icon-container a + a").attribute("href").value unless 
+    scraped_profiles[:linkedin] = profile.css(".vitals-container .social-icon-container a + a").attribute("href").value unless
     profile.css(".vitals-container .social-icon-container a + a").attribute("href").value == []
-      
-    scraped_profiles[:github] = profile.css(".vitals-container .social-icon-container a + a + a").attribute("href").value unless 
+
+    scraped_profiles[:github] = profile.css(".vitals-container .social-icon-container a + a + a").attribute("href").value unless
     profile.css(".vitals-container .social-icon-container a + a + a").attribute("href").value == []
 
-    scraped_profiles[:blog] = profile.css(".vitals-container .social-icon-container a + a + a + a").attribute("href").value unless 
+    scraped_profiles[:blog] = profile.css(".vitals-container .social-icon-container a + a + a + a").attribute("href").value unless
     profile.css(".vitals-container .social-icon-container a + a + a + a").attribute("href").value == []
 
     scraped_profiles[:profile_quote] = profile.css(".vitals-text-container .profile-quote").text unless
     profile.css(".vitals-text-container .profile-quote").text == []
 
-    scraped_profiles[:bio] = profile.css(".description-holder p").first.text unless 
+    scraped_profiles[:bio] = profile.css(".description-holder p").first.text unless
     profile.css(".description-holder p").first.text == []
-      
+
    scraped_profiles
   end
-end
+
 
 end
