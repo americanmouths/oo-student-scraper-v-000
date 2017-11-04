@@ -20,22 +20,27 @@ class Scraper
 
   def self.scrape_profile_page(profile_url)
     doc = Nokogiri::HTML(open(profile_url))
-    profiles = {}
-    doc.css(".main-wrapper").each do |profile|
-      scraped_profiles= {
-        if :twitter == profile.css(".vitals-container .social-icon-container a").attribute("href").value
-        :twitter => profile.css(".vitals-container .social-icon-container a").attribute("href").value
-      end
-        :linkedin => profile.css(".vitals-container .social-icon-container a + a").attribute("href").value,
-        :github => profile.css(".vitals-container .social-icon-container a + a + a").attribute("href").value,
-        :blog => profile.css(".vitals-container .social-icon-container a + a + a + a").attribute("href").value,
-        :profile_quote => profile.css(".vitals-text-container .profile-quote").text,
-        :bio => profile.css(".description-holder p").first.text
-      }
-        profiles = scraped_profiles
-  end
-        profiles
+    scraped_profiles = {}
+    scraped_profiles[:twitter] = profile.css(".vitals-container .social-icon-container a").attribute("href").value unless 
+    profile.css(".vitals-container .social-icon-container a").attribute("href").value == []
 
+    scraped_profiles[:linkedin] = profile.css(".vitals-container .social-icon-container a + a").attribute("href").value unless 
+    profile.css(".vitals-container .social-icon-container a + a").attribute("href").value == []
+      
+    scraped_profiles[:github] = profile.css(".vitals-container .social-icon-container a + a + a").attribute("href").value unless 
+    profile.css(".vitals-container .social-icon-container a + a + a").attribute("href").value == []
+
+    scraped_profiles[:blog] = profile.css(".vitals-container .social-icon-container a + a + a + a").attribute("href").value unless 
+    profile.css(".vitals-container .social-icon-container a + a + a + a").attribute("href").value == []
+
+    scraped_profiles[:profile_quote] = profile.css(".vitals-text-container .profile-quote").text unless
+    profile.css(".vitals-text-container .profile-quote").text == []
+
+    scraped_profiles[:bio] = profile.css(".description-holder p").first.text unless 
+    profile.css(".description-holder p").first.text == []
+      
+   scraped_profiles
   end
+end
 
 end
