@@ -31,12 +31,11 @@ class Scraper
       else
         scraped_profiles[:blog] = profile.attribute("href").value
       end
-
-    scraped_profiles[:profile_quote] = doc.css("div.profile-quote").text
-    scraped_profiles[:bio] = doc.css("div.description-holder p").text
+      scraped_profiles[:profile_quote] = doc.css("div.profile-quote").text
+      scraped_profiles[:bio] = doc.css("div.description-holder p").text
+    end
+    scraped_profiles
   end
-  scraped_profiles
-end
 
 
 end
