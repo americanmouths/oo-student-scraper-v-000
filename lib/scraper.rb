@@ -21,21 +21,19 @@ class Scraper
   def self.scrape_profile_page(profile_url)
     doc = Nokogiri::HTML(open(profile_url))
     scraped_profiles = {}
-    doc.css(".main-wrapper").each do |profile|
-      if profile.css(".vitals-container .social-icon-container a").attribute("href").value.include?("twitter")
-        scraped_profiles[:twitter] = profile.css(".vitals-container .social-icon-container a").attribute("href").value
+    doc.css("div.social-icon-container a").each do |profile|
+      if profile.attribute("href").value.include?("twitter")
+        scraped_profiles[:twitter] = profile.attribute("href").value
+      elsif profile.attribute("href").value.include?("linkedin")
+        scraped_profiles[:linkedin] = profile.attribute("href").value
+      elsif profile.attribute("href").value.include?("github")
+        scraped_profiles[:github] = profile.attribute("href").value
+      else 
+        scraped_profiles[:blog] = profile.attribute("href").value
+      end
 
-      elsif profile.css(".vitals-container .social-icon-container a + a").attribute("href").value.include?("linkedin")
-        scraped_profiles[:linkedin] = profile.css(".vitals-container .social-icon-container a + a").attribute("href").value
-
-      elsif profile.css(".vitals-container .social-icon-container a + a + a").attribute("href").value.include?("github")
-        scraped_profiles[:github] = profile.css(".vitals-container .social-icon-container a + a + a").attribute("href").value
-
-      else scraped_profiles[:blog] = profile.css(".vitals-container .social-icon-container a + a + a + a").attribute("href").value
-    end
-
-    scraped_profiles[:profile_quote] = profile.css(".vitals-text-container .profile-quote").text
-    scraped_profiles[:bio] = profile.css(".description-holder p").first.text
+    scraped_profiles[:profile_quote] = doc.css("div.profile-quote").text
+    scraped_profiles[:bio] = doc.css("div.description-holder p").text
   end
   scraped_profiles
 end
