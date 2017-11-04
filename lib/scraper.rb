@@ -22,7 +22,7 @@ class Scraper
     doc = Nokogiri::HTML(open(profile_url))
     scraped_profiles = {}
     binding.pry
-    
+
     scraped_profiles[:twitter] = doc.css('a[href*="twitter"]').attribute('href').value unless
     doc.css('a[href*="twitter"]').attribute('href').value == []
 
