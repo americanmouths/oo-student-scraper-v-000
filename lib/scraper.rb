@@ -21,8 +21,10 @@ class Scraper
   def self.scrape_profile_page(profile_url)
     doc = Nokogiri::HTML(open(profile_url))
     scraped_profiles = {}
-    scraped_profiles[:twitter] = profile.css(".vitals-container .social-icon-container a").attribute("href").value unless
-    profile.css(".vitals-container .social-icon-container a").attribute("href").value == []
+    binding.pry
+    
+    scraped_profiles[:twitter] = doc.css('a[href*="twitter"]').attribute('href').value unless
+    doc.css('a[href*="twitter"]').attribute('href').value == []
 
     scraped_profiles[:linkedin] = profile.css(".vitals-container .social-icon-container a + a").attribute("href").value unless
     profile.css(".vitals-container .social-icon-container a + a").attribute("href").value == []
