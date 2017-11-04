@@ -9,12 +9,7 @@ class Student
     new_student = student_hash.each {|key, value| self.send(("#{key}="), value)}
     @@all = new_student
   end
-    
-        
-        
 
-
-  end
 
   def self.create_from_collection(students_array)
     students_array.each do |person|
@@ -30,5 +25,5 @@ class Student
   def self.all
     @@all
   end
-  
+
 end
